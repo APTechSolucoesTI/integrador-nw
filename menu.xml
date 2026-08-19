@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu>
+  <menuitem label="Comercial">
+    <icon>fas:shopping-basket fa-fw </icon>
+    <menu>
+      <menuitem label="Solicitação de Produtos">
+        <icon>far:circle fa-fw </icon>
+        <action>SolicitacaoProdutoHeaderList#method=onShow</action>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Metas">
+    <icon>fas:chart-line fa-fw </icon>
+    <menu>
+      <menuitem label="Meta Import">
+        <icon>far:circle fa-fw </icon>
+        <action>MetaImportHeaderList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Fechamento">
+        <icon>far:circle fa-fw </icon>
+        <action>MetaFechamentoList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Meta Trimestrais">
+        <icon>far:circle fa-fw </icon>
+        <action>MetaTrimestralList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Artigos com ST">
+        <icon>far:circle fa-fw </icon>
+        <action>ArtigosSTHeaderList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Campanhas">
+        <icon>far:circle fa-fw </icon>
+        <action>CampanhaList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Metas">
+        <icon>far:circle fa-fw </icon>
+        <action>MetaHeaderList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Premios">
+        <icon>far:circle fa-fw </icon>
+        <action>PremioHeaderList#method=onShow</action>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Configurações">
+    <icon>fas:cogs fa-fw </icon>
+    <menu>
+      <menuitem label="Categoria de Premiação">
+        <icon>far:circle fa-fw </icon>
+        <action>TipoPremioHeaderList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Tabela Preço">
+        <icon>far:circle fa-fw </icon>
+        <action>ApTabelaPrecoHeaderList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Grupo de Clientes">
+        <icon>far:circle fa-fw </icon>
+        <action>ApGrupoClienteHeaderList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Regras de Prospecção">
+        <icon>far:circle fa-fw </icon>
+        <action>RegraProspeccaoHeaderList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Consultores(as)">
+        <icon>far:circle fa-fw </icon>
+        <action>ConsultorHeaderList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Planejamento IMPORT">
+        <icon>far:circle fa-fw </icon>
+        <action>PlanejamentoImportForm#method=onShow</action>
+      </menuitem>
+      <menuitem label="Histórico de Vendas">
+        <icon>far:circle fa-fw </icon>
+        <action>HistoricoVendaList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Cidades e Estados">
+        <icon>far:circle fa-fw </icon>
+        <action>CidadeSimpleList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Grupos de Estoque">
+        <icon>far:circle fa-fw </icon>
+        <action>ApGrupoEstoqueHeaderList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Histórico de Cliente">
+        <icon>far:circle fa-fw </icon>
+        <action>HistoricoClienteList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Itens">
+        <icon>far:circle fa-fw </icon>
+        <action>ApItemSimpleList#method=onShow</action>
+      </menuitem>
+      <menuitem label="Log de Sincronização">
+        <icon>far:circle fa-fw </icon>
+        <action>LogCrontabHeaderList#method=onShow</action>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Clientes">
+    <icon>fas:users fa-fw </icon>
+    <menu>
+      <menuitem label="Histórico de Clientes">
+        <icon>far:circle fa-fw </icon>
+        <action>HistoricoClientesHeaderList#method=onShow</action>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Vendas">
+    <icon>fas:shopping-cart fa-fw </icon>
+    <menu>
+      <menuitem label="Histórico de Vendas">
+        <icon>far:circle fa-fw </icon>
+        <action>HistoricoVendaHeaderList#method=onShow</action>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Preferências do Usuário">
+    <icon>fas:eye-dropper fa-fw </icon>
+    <action>PreferenciaSistemaForm#method=onShow</action>
+    <menu>  
+                </menu>
+  </menuitem>
+  <menuitem label="Trimestral">
+    <icon>fas:calendar fa-fw </icon>
+    <menu>
+      <menuitem label="Clientes no Trimestre">
+        <icon>far:circle fa-fw </icon>
+        <action>TrimestreClienteInicialHeaderList#method=onShow</action>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="_t{Administration}">
+    <icon>fas:home fa-fw</icon>
+    <menu>
+      <menuitem label="Dashboard">
+        <icon>fas:tachometer-alt fa-fw</icon>
+        <action>SystemAdministrationDashboard</action>
+      </menuitem>
+      <menuitem label="_t{Programs}">
+        <icon>far:file-code fa-fw</icon>
+        <action>SystemProgramList</action>
+      </menuitem>
+      <menuitem label="_t{Groups}">
+        <icon>fas:users fa-fw</icon>
+        <action>SystemGroupList</action>
+      </menuitem>
+      <menuitem label="_t{Units}">
+        <icon>fas:university fa-fw</icon>
+        <action>SystemUnitList</action>
+      </menuitem>
+      <menuitem label="_t{Users}">
+        <icon>fas:user fa-fw</icon>
+        <action>SystemUserList</action>
+      </menuitem>
+      <menuitem label="_t{User monitoring}">
+        <icon>fas:binoculars fa-fw</icon>
+        <action>SystemUserMonitorHeaderList</action>
+      </menuitem>
+      <menuitem label="_t{Data importing}">
+        <icon>fas:cloud-upload-alt fa-fw</icon>
+        <action>SystemDataImportForm#method=onShow</action>
+      </menuitem>
+      <menuitem label="_t{Database explorer}">
+        <icon>fas:database fa-fw</icon>
+        <action>SystemDatabaseExplorer</action>
+      </menuitem>
+      <menuitem label="_t{SQL Panel}">
+        <icon>fas:table fa-fw</icon>
+        <action>SystemSQLPanel</action>
+      </menuitem>
+      <menuitem label="_t{Menu editor}">
+        <icon>far:edit fa-fw</icon>
+        <action>SystemMenuEditor</action>
+      </menuitem>
+      <menuitem label="PHP Info">
+        <icon>fas:info-circle fa-fw</icon>
+        <action>SystemPHPInfoView</action>
+      </menuitem>
+      <menuitem label="System Information">
+        <icon>fas:desktop fa-fw</icon>
+        <action>SystemInformationView</action>
+      </menuitem>
+      <menuitem label="_t{Preferences}">
+        <icon>fas:cog fa-fw</icon>
+        <action>SystemPreferenceForm#method=onEdit</action>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="_t{Documents}">
+    <icon>far:file-alt fa-fw</icon>
+    <menu>
+      <menuitem label="_t{Send document}">
+        <icon>fas:cloud-upload-alt fa-fw</icon>
+        <action>SystemDocumentUploadForm</action>
+      </menuitem>
+      <menuitem label="_t{My documents}">
+        <icon>fas:archive fa-fw</icon>
+        <action>SystemDocumentList</action>
+      </menuitem>
+      <menuitem label="_t{Shared with me}">
+        <icon>fas:share-alt fa-fw</icon>
+        <action>SystemSharedDocumentList</action>
+      </menuitem>
+      <menuitem label="_t{Categories}">
+        <icon>fas:th fa-fw</icon>
+        <action>SystemDocumentCategoryFormList</action>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Logs">
+    <icon>fas:desktop fa-fw</icon>
+    <menu>
+      <menuitem label="Dashboard">
+        <icon>fas:tachometer-alt fa-fw</icon>
+        <action>SystemLogDashboard</action>
+      </menuitem>
+      <menuitem label="_t{Access Log}">
+        <icon>fas:key fa-fw</icon>
+        <action>SystemAccessLogList</action>
+      </menuitem>
+      <menuitem label="_t{Change Log}">
+        <icon>fas:film fa-fw</icon>
+        <action>SystemChangeLogView</action>
+      </menuitem>
+      <menuitem label="_t{SQL Log}">
+        <icon>fas:database fa-fw</icon>
+        <action>SystemSqlLogList</action>
+      </menuitem>
+      <menuitem label="_t{Request Log}">
+        <icon>fas:globe fa-fw</icon>
+        <action>SystemRequestLogList</action>
+      </menuitem>
+      <menuitem label="_t{PHP Log}">
+        <icon>fas:exclamation-triangle fa-fw</icon>
+        <action>SystemPHPErrorLogView</action>
+      </menuitem>
+      <menuitem label="Session dump">
+        <icon>fas:code fa-fw</icon>
+        <action>SystemSessionDumpView</action>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Logout">
+    <icon>fas:sign-out-alt fa-fw</icon>
+    <action>LoginForm#method=onLogout#static=1</action>
+  </menuitem>
+</menu>

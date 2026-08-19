@@ -1,0 +1,11 @@
+SELECT setval('aptech_nota_fiscal_id_seq', coalesce(max(id),0) + 1, false) FROM aptech_nota_fiscal;
+SELECT setval('aptech_nota_fiscal_item_id_seq', coalesce(max(id),0) + 1, false) FROM aptech_nota_fiscal_item;
+SELECT setval('cidade_cod_cidade_seq', coalesce(max(cod_cidade),0) + 1, false) FROM cidade;
+SELECT setval('clifor_cod_clifor_seq', coalesce(max(cod_clifor),0) + 1, false) FROM clifor;
+SELECT setval('item_cod_item_seq', coalesce(max(cod_item),0) + 1, false) FROM item;
+SELECT setval('pedido_venda_id_seq', coalesce(max(id),0) + 1, false) FROM pedido_venda;
+SELECT setval('pedvenda_item_id_seq', coalesce(max(id),0) + 1, false) FROM pedvenda_item;
+SELECT setval('repres_comissao_cod_represcomissao_seq', coalesce(max(cod_represcomissao),0) + 1, false) FROM repres_comissao;
+SELECT setval('representante_cod_repres_seq', coalesce(max(cod_repres),0) + 1, false) FROM representante;
+SELECT setval('subgrupo_estoque_cod_subgrupoestoque_seq', coalesce(max(cod_subgrupoestoque),0) + 1, false) FROM subgrupo_estoque;
+SELECT setval('tapecaria_grupo_cod_grupoestoque_seq', coalesce(max(cod_grupoestoque),0) + 1, false) FROM tapecaria_grupo;

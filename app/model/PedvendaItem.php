@@ -1,0 +1,165 @@
+<?php
+
+class PedvendaItem extends TRecord
+{
+    const TABLENAME  = 'pedvenda_item';
+    const PRIMARYKEY = 'id';
+    const IDPOLICY   =  'serial'; // {max, serial}
+
+    
+
+    /**
+     * Constructor method
+     */
+    public function __construct($id = NULL, $callObjectLoad = TRUE)
+    {
+        parent::__construct($id, $callObjectLoad);
+        parent::addAttribute('cod_pedidovenda');
+        parent::addAttribute('cod_empresa');
+        parent::addAttribute('cod_etapa');
+        parent::addAttribute('cod_taxasucesso');
+        parent::addAttribute('cod_prioridade');
+        parent::addAttribute('cod_motcancelamento');
+        parent::addAttribute('os_empresa');
+        parent::addAttribute('os_ordemservico');
+        parent::addAttribute('sequencia');
+        parent::addAttribute('cod_pedidocompra');
+        parent::addAttribute('os_sequencia');
+        parent::addAttribute('cod_tabelapreco');
+        parent::addAttribute('seq_pedcompra');
+        parent::addAttribute('cod_serie');
+        parent::addAttribute('cod_natoperacao');
+        parent::addAttribute('cod_item');
+        parent::addAttribute('qtd_pedida');
+        parent::addAttribute('qtd_atendida');
+        parent::addAttribute('preco_vendatabela');
+        parent::addAttribute('qtd_liberada');
+        parent::addAttribute('preco_venda');
+        parent::addAttribute('aliq_icms');
+        parent::addAttribute('preco_reposicao');
+        parent::addAttribute('aliq_ipi');
+        parent::addAttribute('custo_reposicao');
+        parent::addAttribute('custo_medio');
+        parent::addAttribute('custo_standard');
+        parent::addAttribute('valor_descto');
+        parent::addAttribute('perc_base_icms');
+        parent::addAttribute('perc_descto');
+        parent::addAttribute('aliq_iss');
+        parent::addAttribute('situacao_item');
+        parent::addAttribute('dt_inclusao');
+        parent::addAttribute('dt_cancelado');
+        parent::addAttribute('base_icms');
+        parent::addAttribute('usuario_cancelou');
+        parent::addAttribute('base_icms_sub');
+        parent::addAttribute('motivo_cancelou');
+        parent::addAttribute('valor_total');
+        parent::addAttribute('dt_solicitada');
+        parent::addAttribute('valor_icms');
+        parent::addAttribute('dt_suspenso');
+        parent::addAttribute('valor_icms_sub');
+        parent::addAttribute('dt_atendida');
+        parent::addAttribute('valor_ipi');
+        parent::addAttribute('usuario_suspendeu');
+        parent::addAttribute('valor_iss');
+        parent::addAttribute('motivo_suspendeu');
+        parent::addAttribute('usar_flag_fat');
+        parent::addAttribute('obs');
+        parent::addAttribute('item_descricao');
+        parent::addAttribute('periodo_consumo');
+        parent::addAttribute('referencia');
+        parent::addAttribute('desenho');
+        parent::addAttribute('amostra');
+        parent::addAttribute('dt_prazoentcot');
+        parent::addAttribute('desenv_codigo');
+        parent::addAttribute('desenv_descricao');
+        parent::addAttribute('desenv_unidade');
+        parent::addAttribute('desenv_periodo');
+        parent::addAttribute('lote_minimo');
+        parent::addAttribute('diametro_coluna');
+        parent::addAttribute('valor_bcalc_repasseicms');
+        parent::addAttribute('perc_repasseicms');
+        parent::addAttribute('valor_repasseicms');
+        parent::addAttribute('valor_bcalc_zonafranca');
+        parent::addAttribute('desc_zonafranca');
+        parent::addAttribute('valor_zonafranca');
+        parent::addAttribute('valor_bcalc_iss');
+        parent::addAttribute('iss_perc_reducao');
+        parent::addAttribute('aprec_custoreposicao');
+        parent::addAttribute('valor_ferramental');
+        parent::addAttribute('valor_bcalc_pis');
+        parent::addAttribute('valor_bcalc_cofins');
+        parent::addAttribute('valor_pis');
+        parent::addAttribute('valor_cofins');
+        parent::addAttribute('aliq_pis');
+        parent::addAttribute('aliq_cofins');
+        parent::addAttribute('pis_codtributacao');
+        parent::addAttribute('cofins_codtributacao');
+        parent::addAttribute('cod_usuario');
+        parent::addAttribute('dt_alteracao');
+        parent::addAttribute('item_geramanga');
+        parent::addAttribute('percentual_manga');
+        parent::addAttribute('cod_unidadevenda');
+        parent::addAttribute('fator_conversao');
+        parent::addAttribute('qtd_venda');
+        parent::addAttribute('preco_unitvenda');
+        parent::addAttribute('opcional');
+        parent::addAttribute('preco_vdacomimpostoipi');
+        parent::addAttribute('preco_vdatabelacomipi');
+        parent::addAttribute('preco_unitvdacomipi');
+        parent::addAttribute('tipo_descto');
+        parent::addAttribute('taxa_tabelaprazo');
+        parent::addAttribute('seq_relnecessidade');
+        parent::addAttribute('set_relnecessidade');
+        parent::addAttribute('dt_change');
+        parent::addAttribute('perc_confnat1');
+        parent::addAttribute('perc_confnat2');
+        parent::addAttribute('auxiliar_string1');
+        parent::addAttribute('auxiliar_string2');
+        parent::addAttribute('obs_itemnf');
+        parent::addAttribute('auxiliar_float1');
+        parent::addAttribute('auxiliar_float2');
+        parent::addAttribute('nro_pedidovendaint');
+        parent::addAttribute('preco_vendatabela2');
+        parent::addAttribute('pvi_tipoprecosugerir');
+        parent::addAttribute('cod_ambiente');
+        parent::addAttribute('cod_sugestao');
+        parent::addAttribute('descricao_sugestao');
+        parent::addAttribute('ambiente_apelido');
+        parent::addAttribute('qtd_projeto');
+        parent::addAttribute('percentual_perda');
+        parent::addAttribute('tipo_percentualperda');
+        parent::addAttribute('tipo_sugestaoambiente');
+        parent::addAttribute('comprimento');
+        parent::addAttribute('largura');
+        parent::addAttribute('cod_tipopedvenda');
+        parent::addAttribute('osp_codempresa');
+        parent::addAttribute('osp_codordemservico');
+        parent::addAttribute('osp_sequencia');
+        parent::addAttribute('origem');
+        parent::addAttribute('osl_codempresa');
+        parent::addAttribute('osl_codordemservico');
+        parent::addAttribute('osl_sequencia');
+        parent::addAttribute('seq_nropedcliente');
+        parent::addAttribute('ctr_itemservtipo');
+        parent::addAttribute('perc_base_icmsst');
+        parent::addAttribute('pvi_dtentregaplanejada');
+        parent::addAttribute('subtrai_icmsdeson');
+        parent::addAttribute('motivo_desonicms');
+        parent::addAttribute('valor_desonicms');
+        parent::addAttribute('aliq_desonicms');
+        parent::addAttribute('seq_exibicao');
+        parent::addAttribute('valor_fcpst');
+        parent::addAttribute('preco_vendaoriginal');
+        parent::addAttribute('cod_natoperfatef');
+        parent::addAttribute('auxiliar_string3');
+        parent::addAttribute('sequencia_pai');
+        parent::addAttribute('nro_pedcliente');
+        parent::addAttribute('cod_cenario');
+        parent::addAttribute('sequencia_cenario');
+        parent::addAttribute('imp_pedprogramado');
+            
+    }
+
+    
+}
+
