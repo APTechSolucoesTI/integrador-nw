@@ -1,6 +1,6 @@
 <?php
 
-class PlanejamentoImportExcecaoHeaderList extends TPage
+class PersianaAgrupamentoExcecaoHeaderList extends TPage
 {
     private $form; // form
     private $datagrid; // listing
@@ -8,9 +8,9 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
     private $loaded;
     private $filter_criteria;
     private static $database = 'integrador';
-    private static $activeRecord = 'PlanejamentoImportExcecao';
+    private static $activeRecord = 'PersianaAgrupamentoExcecao';
     private static $primaryKey = 'id';
-    private static $formName = 'formList_PlanejamentoImportExcecao';
+    private static $formName = 'formList_PersianaAgrupamentoExcecao';
     private $showMethods = ['onReload', 'onSearch', 'onRefresh', 'onClearFilters', 'onGlobalSearch'];
     private $limit = 20;
 
@@ -30,18 +30,37 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
 
         $this->limit = 0;
 
+        $criteria_persiana_agrupamento_id = new TCriteria();
+
+        if (!empty($param['persiana_agrupamento_id']))
+        {
+            TSession::setValue(
+                __CLASS__ . '_persiana_agrupamento_id',
+                (int) $param['persiana_agrupamento_id']
+            );
+        }
+
+        $id = new TEntry('id');
+        $persiana_agrupamento_id = new TDBCombo('persiana_agrupamento_id', 'integrador', 'PersianaAgrupamento', 'id', '{id}','id asc' , $criteria_persiana_agrupamento_id );
         $data = new TDate('data');
         $qtd = new TEntry('qtd');
 
+        $id->exitOnEnter();
         $qtd->exitOnEnter();
 
+        $id->setExitAction(new TAction([$this, 'onSearch'], ['static'=>'1', 'target_container' => $param['target_container'] ?? null]));
         $data->setExitAction(new TAction([$this, 'onSearch'], ['static'=>'1', 'target_container' => $param['target_container'] ?? null]));
         $qtd->setExitAction(new TAction([$this, 'onSearch'], ['static'=>'1', 'target_container' => $param['target_container'] ?? null]));
 
+        $persiana_agrupamento_id->setChangeAction(new TAction([$this, 'onSearch'], ['static'=>'1', 'target_container' => $param['target_container'] ?? null]));
+
+        $persiana_agrupamento_id->enableSearch();
         $data->setMask('dd/mm/yyyy');
         $data->setDatabaseMask('yyyy-mm-dd');
         $data->setSize(110);
+        $id->setSize('100%');
         $qtd->setSize('100%');
+        $persiana_agrupamento_id->setSize('100%');
 
         // creates a Datagrid
         $this->datagrid = new TDataGrid;
@@ -56,35 +75,24 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
         $this->datagrid->style = 'width: 100%';
         $this->datagrid->setHeight(320);
 
-        $column_data_transformed = new TDataGridColumn('data', "Data Exceção:", 'left');
-        $column_qtd = new TDataGridColumn('qtd', "Limite IMPORT:", 'left');
-        $column_planejamento_import_id = new TDataGridColumn('planejamento_import_id', "Planejamento import id", 'left');
+        $column_id = new TDataGridColumn('id', "Id", 'center' , '70px');
+        $column_persiana_agrupamento_id = new TDataGridColumn('persiana_agrupamento_id', "Persiana agrupamento id", 'left');
+        $column_data = new TDataGridColumn('data', "Data Exceção:", 'left');
+        $column_qtd = new TDataGridColumn('qtd', "Limite Diário:", 'left');
 
-        $column_data_transformed->setTransformer(function($value, $object, $row, $cell = null, $last_row = null)
-        {
-            if(!empty(trim((string) $value)))
-            {
-                try
-                {
-                    $date = new DateTime($value);
-                    return $date->format('d/m/Y');
-                }
-                catch (Exception $e)
-                {
-                    return $value;
-                }
-            }
-        });        
+        $order_id = new TAction(array($this, 'onReload'));
+        $order_id->setParameter('order', 'id');
+        $column_id->setAction($order_id);
 
-        $column_data_transformed->disableHtmlConversion();
+        $column_id->hide();
+        $column_persiana_agrupamento_id->hide();
 
-        $column_planejamento_import_id->hide();
-
-        $this->datagrid->addColumn($column_data_transformed);
+        $this->datagrid->addColumn($column_id);
+        $this->datagrid->addColumn($column_persiana_agrupamento_id);
+        $this->datagrid->addColumn($column_data);
         $this->datagrid->addColumn($column_qtd);
-        $this->datagrid->addColumn($column_planejamento_import_id);
 
-        $action_onEdit = new TDataGridAction(array('PlanejamentoImportExcecaoForm', 'onEdit'));
+        $action_onEdit = new TDataGridAction(array('PersianaAgrupamentoExcecaoForm', 'onEdit'));
         $action_onEdit->setUseButton(false);
         $action_onEdit->setButtonClass('btn btn-default btn-sm');
         $action_onEdit->setLabel("Editar");
@@ -93,7 +101,7 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
 
         $this->datagrid->addAction($action_onEdit);
 
-        $action_onDelete = new TDataGridAction(array('PlanejamentoImportExcecaoHeaderList', 'onDelete'));
+        $action_onDelete = new TDataGridAction(array('PersianaAgrupamentoExcecaoHeaderList', 'onDelete'));
         $action_onDelete->setUseButton(false);
         $action_onDelete->setButtonClass('btn btn-default btn-sm');
         $action_onDelete->setLabel("Excluir");
@@ -117,19 +125,23 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
         {
             $tr->add(TElement::tag('td', ''));
         }
+        $td_id = TElement::tag('td', $id);
+        $tr->add($td_id);
+        $td_persiana_agrupamento_id = TElement::tag('td', $persiana_agrupamento_id);
+        $tr->add($td_persiana_agrupamento_id);
         $td_data = TElement::tag('td', $data);
         $tr->add($td_data);
         $td_qtd = TElement::tag('td', $qtd);
         $tr->add($td_qtd);
-        $td_empty = TElement::tag('td', "");
-        $tr->add($td_empty);
 
+        $this->datagrid_form->addField($id);
+        $this->datagrid_form->addField($persiana_agrupamento_id);
         $this->datagrid_form->addField($data);
         $this->datagrid_form->addField($qtd);
 
         $this->datagrid_form->setData( TSession::getValue(__CLASS__.'_filter_data') );
 
-        $panel = new TPanelGroup("Exceções de Planejamento IMPORT");
+        $panel = new TPanelGroup("Exceção de Planejamento de Persianas");
         $panel->datagrid = 'datagrid-container';
         $this->datagridPanel = $panel;
         $panel->getBody()->class .= ' table-responsive';
@@ -150,7 +162,7 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
         $panel->add($this->datagrid_form);
 
         $button_cadastrar = new TButton('button_button_cadastrar');
-        $button_cadastrar->setAction(new TAction(['PlanejamentoImportExcecaoForm', 'onShow']), "Cadastrar");
+        $button_cadastrar->setAction(new TAction(['PersianaAgrupamentoExcecaoForm', 'onShow']), "Cadastrar");
         $button_cadastrar->addStyleClass('btn-default');
         $button_cadastrar->setImage('fas:plus #69aa46');
 
@@ -160,12 +172,34 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
 
         $this->datagrid_form->add($this->datagrid);
 
+        $agrupamentoId = TSession::getValue(
+            __CLASS__ . '_persiana_agrupamento_id'
+        );
+
+        if (!empty($agrupamentoId))
+        {
+            $actionCadastrar = new TAction([
+                'PersianaAgrupamentoExcecaoForm',
+                'onShow'
+            ]);
+
+            $actionCadastrar->setParameter(
+                'persiana_agrupamento_id',
+                $agrupamentoId
+            );
+
+            $button_cadastrar->setAction(
+                $actionCadastrar,
+                'Cadastrar'
+            );
+        }
+
         // vertical box container
         $container = new TVBox;
         $container->style = 'width: 100%';
         if(empty($param['target_container']))
         {
-            $container->add(TBreadCrumb::create(["Configurações","Planejamento import excecaos"]));
+            $container->add(TBreadCrumb::create(["Configurações","Exceção de Planejamento de Persianas"]));
         }
 
         $container->add($panel);
@@ -186,7 +220,7 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
                 TTransaction::open(self::$database);
 
                 // instantiates object
-                $object = new PlanejamentoImportExcecao($key, FALSE); 
+                $object = new PersianaAgrupamentoExcecao($key, FALSE); 
 
                 // deletes the object from the database
                 $object->delete();
@@ -230,10 +264,16 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
         TSession::setValue(__CLASS__.'_filter_data', NULL);
         TSession::setValue(__CLASS__.'_filters', NULL);
 
-        if (isset($data->data) AND ( (is_scalar($data->data) AND $data->data !== '') OR (is_array($data->data) AND (!empty($data->data)) )) )
+        if (isset($data->id) AND ( (is_scalar($data->id) AND $data->id !== '') OR (is_array($data->id) AND (!empty($data->id)) )) )
         {
 
-            $filters[] = new TFilter('data', '=', $data->data);// create the filter 
+            $filters[] = new TFilter('id', '=', $data->id);// create the filter 
+        }
+
+        if (isset($data->persiana_agrupamento_id) AND ( (is_scalar($data->persiana_agrupamento_id) AND $data->persiana_agrupamento_id !== '') OR (is_array($data->persiana_agrupamento_id) AND (!empty($data->persiana_agrupamento_id)) )) )
+        {
+
+            $filters[] = new TFilter('persiana_agrupamento_id', '=', $data->persiana_agrupamento_id);// create the filter 
         }
 
         if (isset($data->qtd) AND ( (is_scalar($data->qtd) AND $data->qtd !== '') OR (is_array($data->qtd) AND (!empty($data->qtd)) )) )
@@ -272,7 +312,7 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
             // open a transaction with database 'integrador'
             TTransaction::open(self::$database);
 
-            // creates a repository for PlanejamentoImportExcecao
+            // creates a repository for PersianaAgrupamentoExcecao
             $repository = new TRepository(self::$activeRecord);
 
             $criteria = clone $this->filter_criteria;
@@ -295,6 +335,27 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
                 {
                     $criteria->add($filter);       
                 }
+            }
+
+            $agrupamentoId = TSession::getValue(
+                __CLASS__ . '_persiana_agrupamento_id'
+            );
+
+            if (!empty($agrupamentoId))
+            {
+                $criteria->add(
+                    new TFilter(
+                        'persiana_agrupamento_id',
+                        '=',
+                        $agrupamentoId
+                    )
+                );
+            }
+            else
+            {
+                $criteria->add(
+                    new TFilter('id', '=', -1)
+                );
             }
 
             // load the objects according to criteria
@@ -371,7 +432,7 @@ class PlanejamentoImportExcecaoHeaderList extends TPage
             TTransaction::open(self::$database);    
         }
 
-        $object = new PlanejamentoImportExcecao($id);
+        $object = new PersianaAgrupamentoExcecao($id);
 
         $row = $list->datagrid->addItem($object);
         $row->id = "row_{$object->id}";

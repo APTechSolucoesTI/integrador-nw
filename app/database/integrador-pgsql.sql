@@ -476,6 +476,36 @@ CREATE TABLE mini_meta_tipo(
       nome varchar  (255)   NOT NULL  , 
  PRIMARY KEY (id)) ; 
 
+CREATE TABLE persiana_agrupamento( 
+      id  SERIAL    , 
+      nome varchar  (30)   NOT NULL  , 
+      qtd integer   NOT NULL  , 
+      data_inicio date   , 
+      data_fim date   , 
+      ativo char  (1)   NOT NULL    DEFAULT 'S', 
+      eficiencia_operacional float   , 
+ PRIMARY KEY (id)) ; 
+
+CREATE TABLE persiana_agrupamento_dias( 
+      id  SERIAL    NOT NULL  , 
+      dia integer   , 
+      valido char  (1)   , 
+      persiana_agrupamento_id integer   NOT NULL  , 
+ PRIMARY KEY (id)) ; 
+
+CREATE TABLE persiana_agrupamento_excecao( 
+      id  SERIAL    NOT NULL  , 
+      persiana_agrupamento_id integer   NOT NULL  , 
+      data date   , 
+      qtd integer   , 
+ PRIMARY KEY (id)) ; 
+
+CREATE TABLE persiana_agrupamento_grupo( 
+      id  SERIAL    , 
+      persiana_agrupamento_id integer   NOT NULL  , 
+      ap_grupo_estoque_id integer   NOT NULL  , 
+ PRIMARY KEY (id)) ; 
+
 CREATE TABLE planejamento_import( 
       id  SERIAL    NOT NULL  , 
       qtd integer   , 
@@ -660,6 +690,7 @@ CREATE TABLE trimestre_cliente_inicial(
  PRIMARY KEY (id)) ; 
 
  
+ ALTER TABLE persiana_agrupamento ADD UNIQUE (nome);
   
  ALTER TABLE aguardo_produto ADD CONSTRAINT fk_aguardo_produto_4 FOREIGN KEY (ap_item_id) references ap_item(id); 
 ALTER TABLE aguardo_produto ADD CONSTRAINT fk_aguardando_produto_2 FOREIGN KEY (system_users_id) references system_users(id); 
@@ -737,6 +768,10 @@ ALTER TABLE mini_meta_fechamento ADD CONSTRAINT fk_mini_meta_fechamento_2 FOREIG
 ALTER TABLE mini_meta_item ADD CONSTRAINT fk_mini_meta_item_1 FOREIGN KEY (mini_meta_id) references mini_meta(id); 
 ALTER TABLE minimeta_tabela_preco ADD CONSTRAINT fk_minimeta_tabela_preco_1 FOREIGN KEY (ap_tabela_preco_id) references ap_tabela_preco(id); 
 ALTER TABLE minimeta_tabela_preco ADD CONSTRAINT fk_minimeta_tabela_preco_2 FOREIGN KEY (mini_meta_id) references mini_meta(id); 
+ALTER TABLE persiana_agrupamento_dias ADD CONSTRAINT fk_persiana_agrupamento_dias_1 FOREIGN KEY (persiana_agrupamento_id) references persiana_agrupamento(id); 
+ALTER TABLE persiana_agrupamento_excecao ADD CONSTRAINT fk_persiana_agrupamento_excecao_1 FOREIGN KEY (persiana_agrupamento_id) references persiana_agrupamento(id); 
+ALTER TABLE persiana_agrupamento_grupo ADD CONSTRAINT fk_persiana_agrupamento_grupo_2 FOREIGN KEY (ap_grupo_estoque_id) references ap_grupo_estoque(id); 
+ALTER TABLE persiana_agrupamento_grupo ADD CONSTRAINT fk_persiana_agrupamento_grupo_1 FOREIGN KEY (persiana_agrupamento_id) references persiana_agrupamento(id); 
 ALTER TABLE planejamento_import_dias ADD CONSTRAINT fk_planejamento_import_dias_1 FOREIGN KEY (planejamento_import_id) references planejamento_import(id); 
 ALTER TABLE planejamento_import_excecao ADD CONSTRAINT fk_planejamento_import_excecao_1 FOREIGN KEY (planejamento_import_id) references planejamento_import(id); 
 ALTER TABLE preferencia_sistema ADD CONSTRAINT fk_preferencia_sistema_1 FOREIGN KEY (system_users_id) references system_users(id); 
@@ -844,6 +879,10 @@ CREATE index idx_mini_meta_fechamento_ap_representante_id on mini_meta_fechament
 CREATE index idx_mini_meta_item_mini_meta_id on mini_meta_item(mini_meta_id); 
 CREATE index idx_minimeta_tabela_preco_ap_tabela_preco_id on minimeta_tabela_preco(ap_tabela_preco_id); 
 CREATE index idx_minimeta_tabela_preco_mini_meta_id on minimeta_tabela_preco(mini_meta_id); 
+CREATE index idx_persiana_agrupamento_dias_persiana_agrupamento_id on persiana_agrupamento_dias(persiana_agrupamento_id); 
+CREATE index idx_persiana_agrupamento_excecao_persiana_agrupamento_id on persiana_agrupamento_excecao(persiana_agrupamento_id); 
+CREATE index idx_persiana_agrupamento_grupo_ap_grupo_estoque_id on persiana_agrupamento_grupo(ap_grupo_estoque_id); 
+CREATE index idx_persiana_agrupamento_grupo_persiana_agrupamento_id on persiana_agrupamento_grupo(persiana_agrupamento_id); 
 CREATE index idx_planejamento_import_dias_planejamento_import_id on planejamento_import_dias(planejamento_import_id); 
 CREATE index idx_planejamento_import_excecao_planejamento_import_id on planejamento_import_excecao(planejamento_import_id); 
 CREATE index idx_preferencia_sistema_system_users_id on preferencia_sistema(system_users_id); 

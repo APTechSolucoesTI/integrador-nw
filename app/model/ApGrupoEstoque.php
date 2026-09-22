@@ -86,6 +86,15 @@ class ApGrupoEstoque extends TRecord
         $criteria->add(new TFilter('ap_grupo_estoque_id', '=', $this->id));
         return RestricaoPremio::getObjects( $criteria );
     }
+    /**
+     * Method getPersianaAgrupamentoGrupos
+     */
+    public function getPersianaAgrupamentoGrupos()
+    {
+        $criteria = new TCriteria;
+        $criteria->add(new TFilter('ap_grupo_estoque_id', '=', $this->id));
+        return PersianaAgrupamentoGrupo::getObjects( $criteria );
+    }
 
     public function set_historico_venda_item_venda_to_string($historico_venda_item_venda_to_string)
     {
@@ -477,6 +486,58 @@ class ApGrupoEstoque extends TRecord
         return implode(', ', $values);
     }
 
+    public function set_persiana_agrupamento_grupo_persiana_agrupamento_to_string($persiana_agrupamento_grupo_persiana_agrupamento_to_string)
+    {
+        if(is_array($persiana_agrupamento_grupo_persiana_agrupamento_to_string))
+        {
+            $values = PersianaAgrupamento::where('id', 'in', $persiana_agrupamento_grupo_persiana_agrupamento_to_string)->getIndexedArray('id', 'id');
+            $this->persiana_agrupamento_grupo_persiana_agrupamento_to_string = implode(', ', $values);
+        }
+        else
+        {
+            $this->persiana_agrupamento_grupo_persiana_agrupamento_to_string = $persiana_agrupamento_grupo_persiana_agrupamento_to_string;
+        }
+
+        $this->vdata['persiana_agrupamento_grupo_persiana_agrupamento_to_string'] = $this->persiana_agrupamento_grupo_persiana_agrupamento_to_string;
+    }
+
+    public function get_persiana_agrupamento_grupo_persiana_agrupamento_to_string()
+    {
+        if(!empty($this->persiana_agrupamento_grupo_persiana_agrupamento_to_string))
+        {
+            return $this->persiana_agrupamento_grupo_persiana_agrupamento_to_string;
+        }
+    
+        $values = PersianaAgrupamentoGrupo::where('ap_grupo_estoque_id', '=', $this->id)->getIndexedArray('persiana_agrupamento_id','{persiana_agrupamento->id}');
+        return implode(', ', $values);
+    }
+
+    public function set_persiana_agrupamento_grupo_ap_grupo_estoque_to_string($persiana_agrupamento_grupo_ap_grupo_estoque_to_string)
+    {
+        if(is_array($persiana_agrupamento_grupo_ap_grupo_estoque_to_string))
+        {
+            $values = ApGrupoEstoque::where('id', 'in', $persiana_agrupamento_grupo_ap_grupo_estoque_to_string)->getIndexedArray('descricao', 'descricao');
+            $this->persiana_agrupamento_grupo_ap_grupo_estoque_to_string = implode(', ', $values);
+        }
+        else
+        {
+            $this->persiana_agrupamento_grupo_ap_grupo_estoque_to_string = $persiana_agrupamento_grupo_ap_grupo_estoque_to_string;
+        }
+
+        $this->vdata['persiana_agrupamento_grupo_ap_grupo_estoque_to_string'] = $this->persiana_agrupamento_grupo_ap_grupo_estoque_to_string;
+    }
+
+    public function get_persiana_agrupamento_grupo_ap_grupo_estoque_to_string()
+    {
+        if(!empty($this->persiana_agrupamento_grupo_ap_grupo_estoque_to_string))
+        {
+            return $this->persiana_agrupamento_grupo_ap_grupo_estoque_to_string;
+        }
+    
+        $values = PersianaAgrupamentoGrupo::where('ap_grupo_estoque_id', '=', $this->id)->getIndexedArray('ap_grupo_estoque_id','{ap_grupo_estoque->descricao}');
+        return implode(', ', $values);
+    }
+
     /**
      * Method onBeforeDelete
      */
@@ -500,6 +561,11 @@ class ApGrupoEstoque extends TRecord
         }
     
         if(RestricaoPremio::where('ap_grupo_estoque_id', '=', $this->id)->first())
+        {
+            throw new Exception("Não é possível deletar este registro pois ele está sendo utilizado em outra parte do sistema");
+        }
+    
+        if(PersianaAgrupamentoGrupo::where('ap_grupo_estoque_id', '=', $this->id)->first())
         {
             throw new Exception("Não é possível deletar este registro pois ele está sendo utilizado em outra parte do sistema");
         }

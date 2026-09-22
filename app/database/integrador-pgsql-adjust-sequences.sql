@@ -40,6 +40,10 @@ SELECT setval('mini_meta_fechamento_id_seq', coalesce(max(id),0) + 1, false) FRO
 SELECT setval('mini_meta_item_id_seq', coalesce(max(id),0) + 1, false) FROM mini_meta_item;
 SELECT setval('minimeta_tabela_preco_id_seq', coalesce(max(id),0) + 1, false) FROM minimeta_tabela_preco;
 SELECT setval('mini_meta_tipo_id_seq', coalesce(max(id),0) + 1, false) FROM mini_meta_tipo;
+SELECT setval('persiana_agrupamento_id_seq', coalesce(max(id),0) + 1, false) FROM persiana_agrupamento;
+SELECT setval('persiana_agrupamento_dias_id_seq', coalesce(max(id),0) + 1, false) FROM persiana_agrupamento_dias;
+SELECT setval('persiana_agrupamento_excecao_id_seq', coalesce(max(id),0) + 1, false) FROM persiana_agrupamento_excecao;
+SELECT setval('persiana_agrupamento_grupo_id_seq', coalesce(max(id),0) + 1, false) FROM persiana_agrupamento_grupo;
 SELECT setval('planejamento_import_id_seq', coalesce(max(id),0) + 1, false) FROM planejamento_import;
 SELECT setval('planejamento_import_dias_id_seq', coalesce(max(id),0) + 1, false) FROM planejamento_import_dias;
 SELECT setval('planejamento_import_excecao_id_seq', coalesce(max(id),0) + 1, false) FROM planejamento_import_excecao;

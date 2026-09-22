@@ -476,6 +476,36 @@ CREATE TABLE mini_meta_tipo(
       nome varchar  (255)    NOT NULL , 
  PRIMARY KEY (id)) ; 
 
+CREATE TABLE persiana_agrupamento( 
+      id number(10)   , 
+      nome varchar  (30)    NOT NULL , 
+      qtd number(10)    NOT NULL , 
+      data_inicio date   , 
+      data_fim date   , 
+      ativo char  (1)    DEFAULT 'S'  NOT NULL , 
+      eficiencia_operacional binary_double   , 
+ PRIMARY KEY (id)) ; 
+
+CREATE TABLE persiana_agrupamento_dias( 
+      id number(10)    NOT NULL , 
+      dia number(10)   , 
+      valido char  (1)   , 
+      persiana_agrupamento_id number(10)    NOT NULL , 
+ PRIMARY KEY (id)) ; 
+
+CREATE TABLE persiana_agrupamento_excecao( 
+      id number(10)    NOT NULL , 
+      persiana_agrupamento_id number(10)    NOT NULL , 
+      data date   , 
+      qtd number(10)   , 
+ PRIMARY KEY (id)) ; 
+
+CREATE TABLE persiana_agrupamento_grupo( 
+      id number(10)   , 
+      persiana_agrupamento_id number(10)    NOT NULL , 
+      ap_grupo_estoque_id number(10)    NOT NULL , 
+ PRIMARY KEY (id)) ; 
+
 CREATE TABLE planejamento_import( 
       id number(10)    NOT NULL , 
       qtd number(10)   , 
@@ -660,6 +690,7 @@ CREATE TABLE trimestre_cliente_inicial(
  PRIMARY KEY (id)) ; 
 
  
+ ALTER TABLE persiana_agrupamento ADD UNIQUE (nome);
   
  ALTER TABLE aguardo_produto ADD CONSTRAINT fk_aguardo_produto_4 FOREIGN KEY (ap_item_id) references ap_item(id); 
 ALTER TABLE aguardo_produto ADD CONSTRAINT fk_aguardando_produto_2 FOREIGN KEY (system_users_id) references system_users(id); 
@@ -737,6 +768,10 @@ ALTER TABLE mini_meta_fechamento ADD CONSTRAINT fk_mini_meta_fechamento_2 FOREIG
 ALTER TABLE mini_meta_item ADD CONSTRAINT fk_mini_meta_item_1 FOREIGN KEY (mini_meta_id) references mini_meta(id); 
 ALTER TABLE minimeta_tabela_preco ADD CONSTRAINT fk_minimeta_tabela_preco_1 FOREIGN KEY (ap_tabela_preco_id) references ap_tabela_preco(id); 
 ALTER TABLE minimeta_tabela_preco ADD CONSTRAINT fk_minimeta_tabela_preco_2 FOREIGN KEY (mini_meta_id) references mini_meta(id); 
+ALTER TABLE persiana_agrupamento_dias ADD CONSTRAINT fk_persiana_agrupamento_dias_1 FOREIGN KEY (persiana_agrupamento_id) references persiana_agrupamento(id); 
+ALTER TABLE persiana_agrupamento_excecao ADD CONSTRAINT fk_persiana_agrupamento_excecao_1 FOREIGN KEY (persiana_agrupamento_id) references persiana_agrupamento(id); 
+ALTER TABLE persiana_agrupamento_grupo ADD CONSTRAINT fk_persiana_agrupamento_grupo_2 FOREIGN KEY (ap_grupo_estoque_id) references ap_grupo_estoque(id); 
+ALTER TABLE persiana_agrupamento_grupo ADD CONSTRAINT fk_persiana_agrupamento_grupo_1 FOREIGN KEY (persiana_agrupamento_id) references persiana_agrupamento(id); 
 ALTER TABLE planejamento_import_dias ADD CONSTRAINT fk_planejamento_import_dias_1 FOREIGN KEY (planejamento_import_id) references planejamento_import(id); 
 ALTER TABLE planejamento_import_excecao ADD CONSTRAINT fk_planejamento_import_excecao_1 FOREIGN KEY (planejamento_import_id) references planejamento_import(id); 
 ALTER TABLE preferencia_sistema ADD CONSTRAINT fk_preferencia_sistema_1 FOREIGN KEY (system_users_id) references system_users(id); 
@@ -1395,6 +1430,66 @@ BEFORE INSERT ON mini_meta_tipo FOR EACH ROW
     BEGIN 
 
         SELECT mini_meta_tipo_id_seq.NEXTVAL INTO :NEW.id FROM DUAL; 
+
+END;
+CREATE SEQUENCE persiana_agrupamento_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE OR REPLACE TRIGGER persiana_agrupamento_id_seq_tr 
+
+BEFORE INSERT ON persiana_agrupamento FOR EACH ROW 
+
+    WHEN 
+
+        (NEW.id IS NULL) 
+
+    BEGIN 
+
+        SELECT persiana_agrupamento_id_seq.NEXTVAL INTO :NEW.id FROM DUAL; 
+
+END;
+CREATE SEQUENCE persiana_agrupamento_dias_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE OR REPLACE TRIGGER persiana_agrupamento_dias_id_seq_tr 
+
+BEFORE INSERT ON persiana_agrupamento_dias FOR EACH ROW 
+
+    WHEN 
+
+        (NEW.id IS NULL) 
+
+    BEGIN 
+
+        SELECT persiana_agrupamento_dias_id_seq.NEXTVAL INTO :NEW.id FROM DUAL; 
+
+END;
+CREATE SEQUENCE persiana_agrupamento_excecao_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE OR REPLACE TRIGGER persiana_agrupamento_excecao_id_seq_tr 
+
+BEFORE INSERT ON persiana_agrupamento_excecao FOR EACH ROW 
+
+    WHEN 
+
+        (NEW.id IS NULL) 
+
+    BEGIN 
+
+        SELECT persiana_agrupamento_excecao_id_seq.NEXTVAL INTO :NEW.id FROM DUAL; 
+
+END;
+CREATE SEQUENCE persiana_agrupamento_grupo_id_seq START WITH 1 INCREMENT BY 1; 
+
+CREATE OR REPLACE TRIGGER persiana_agrupamento_grupo_id_seq_tr 
+
+BEFORE INSERT ON persiana_agrupamento_grupo FOR EACH ROW 
+
+    WHEN 
+
+        (NEW.id IS NULL) 
+
+    BEGIN 
+
+        SELECT persiana_agrupamento_grupo_id_seq.NEXTVAL INTO :NEW.id FROM DUAL; 
 
 END;
 CREATE SEQUENCE planejamento_import_id_seq START WITH 1 INCREMENT BY 1; 

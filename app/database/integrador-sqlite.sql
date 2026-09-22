@@ -554,6 +554,40 @@ CREATE TABLE mini_meta_tipo(
       nome varchar  (255)   NOT NULL  , 
  PRIMARY KEY (id)) ; 
 
+CREATE TABLE persiana_agrupamento( 
+      id  INTEGER    , 
+      nome varchar  (30)   NOT NULL  , 
+      qtd int   NOT NULL  , 
+      data_inicio date   , 
+      data_fim date   , 
+      ativo char  (1)   NOT NULL    DEFAULT 'S', 
+      eficiencia_operacional double   , 
+ PRIMARY KEY (id)) ; 
+
+CREATE TABLE persiana_agrupamento_dias( 
+      id  INTEGER    NOT NULL  , 
+      dia int   , 
+      valido char  (1)   , 
+      persiana_agrupamento_id int   NOT NULL  , 
+ PRIMARY KEY (id),
+FOREIGN KEY(persiana_agrupamento_id) REFERENCES persiana_agrupamento(id)) ; 
+
+CREATE TABLE persiana_agrupamento_excecao( 
+      id  INTEGER    NOT NULL  , 
+      persiana_agrupamento_id int   NOT NULL  , 
+      data date   , 
+      qtd int   , 
+ PRIMARY KEY (id),
+FOREIGN KEY(persiana_agrupamento_id) REFERENCES persiana_agrupamento(id)) ; 
+
+CREATE TABLE persiana_agrupamento_grupo( 
+      id  INTEGER    , 
+      persiana_agrupamento_id int   NOT NULL  , 
+      ap_grupo_estoque_id int   NOT NULL  , 
+ PRIMARY KEY (id),
+FOREIGN KEY(ap_grupo_estoque_id) REFERENCES ap_grupo_estoque(id),
+FOREIGN KEY(persiana_agrupamento_id) REFERENCES persiana_agrupamento(id)) ; 
+
 CREATE TABLE planejamento_import( 
       id  INTEGER    NOT NULL  , 
       qtd int   , 
@@ -768,4 +802,5 @@ FOREIGN KEY(cidade_id) REFERENCES ap_cidade(id),
 FOREIGN KEY(estado_id) REFERENCES ap_estado(id)) ; 
 
  
+ CREATE UNIQUE INDEX unique_idx_persiana_agrupamento_nome ON persiana_agrupamento(nome);
  

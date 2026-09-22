@@ -1054,6 +1054,10 @@ class MetaForm extends TPage
                 $masterObject->feriados++;
                 $masterObject->dias_disponiveis--;
 
+                self::garantirExcecaoFeriadoPersianas(
+                    $detailObject->data_feriado
+                );
+
             }, $this->meta_feriado_metas_criteria); 
             if (!empty($meta_feriado_meta_items))
             {
@@ -1188,6 +1192,47 @@ class MetaForm extends TPage
     public static function getFormName()
     {
         return self::$formName;
+    }
+
+    private static function garantirExcecaoFeriadoPersianas($dataFeriado)
+    {
+        if (empty($dataFeriado))
+        {
+            return;
+        }
+
+        $agrupamentos = PersianaAgrupamento::where('id', '>', 0)->load();
+
+        if (!$agrupamentos)
+        {
+            return;
+        }
+
+        foreach ($agrupamentos as $agrupamento)
+        {
+            $existe = PersianaAgrupamentoExcecao::where(
+                'persiana_agrupamento_id',
+                '=',
+                $agrupamento->id
+            )
+            ->where(
+                'data',
+                '=',
+                $dataFeriado
+            )
+            ->first();
+
+            if (!$existe)
+            {
+                $excecao = new PersianaAgrupamentoExcecao();
+
+                $excecao->persiana_agrupamento_id = $agrupamento->id;
+                $excecao->data = $dataFeriado;
+                $excecao->qtd = 0;
+
+                $excecao->store();
+            }
+        }
     }
 
 }

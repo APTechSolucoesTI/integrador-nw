@@ -69,6 +69,10 @@
         <icon>far:circle fa-fw </icon>
         <action>PlanejamentoImportForm#method=onShow</action>
       </menuitem>
+      <menuitem label="Planejamento de Persiana">
+        <icon>far:circle fa-fw </icon>
+        <action>PersianaAgrupamentoHeaderList#method=onShow</action>
+      </menuitem>
       <menuitem label="Histórico de Vendas">
         <icon>far:circle fa-fw </icon>
         <action>HistoricoVendaList#method=onShow</action>
